@@ -17,6 +17,7 @@ public class Comments {
 
     private String commentAuthor;
     private String comment;
+    private String date;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id")
@@ -26,9 +27,10 @@ public class Comments {
 
     }
 
-    public Comments(String commentauthor, String comment, Posts posts){
+    public Comments(String commentauthor, String comment,String date, Posts posts){
         this.commentAuthor = commentauthor;
         this.comment = comment;
+        this.date = date;
         this.posts = posts;
     }
 

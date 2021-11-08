@@ -1,16 +1,20 @@
 package com.example.miniredditbackend.post;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PostModel {
+public class CommentModel {
 
-    private String title;
-    private String author;
+    private String commentAuthor;
+    private String comment;
     private String date;
-    private String message;
 
 }
+
+
+
+
+
+
