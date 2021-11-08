@@ -1,4 +1,4 @@
-package com.example.miniredditbackend.user;
+package com.example.miniredditbackend.token;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserController {
+public class TokenController {
 
-    private UserService userSer;
+    private TokenService tokenSer;
 
     @Autowired
-    public UserController(UserService userSer){
-        this.userSer = userSer;
+    public TokenController(TokenService tokenSer){
+        this.tokenSer = tokenSer;
     }
 
-    @PostMapping("/user")
-    public void createUser(@RequestBody UserModel newUser, HttpServletResponse response){
-        userSer.createUser(new User(newUser.getName(), newUser.getPassword()));
+    @PostMapping("/token")
+    public void createUser(@RequestBody TokenModel newToken, HttpServletResponse response){
+        tokenSer.createUser(new Token(newToken.getName(), newToken.getToken()));
     }
 
 }

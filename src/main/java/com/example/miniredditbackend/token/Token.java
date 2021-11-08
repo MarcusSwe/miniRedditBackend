@@ -1,4 +1,4 @@
-package com.example.miniredditbackend.user;
+package com.example.miniredditbackend.token;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "token")
+public class Token {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,15 +18,15 @@ public class User {
 
     @Column(name = "user")
     private String name;
-    @Column(name = "password")
-    private String password;
+    @Column(name = "token")
+    private String token;
 
-    public User(){
+    public Token(){
     }
 
-    public User(String user, String password){
+    public Token(String user, String token){
         this.name = user;
-        this.password = password;
+        this.token = token;
     }
 
 
