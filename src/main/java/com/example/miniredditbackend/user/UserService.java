@@ -14,7 +14,7 @@ public class UserService implements UserSer{
     }
 
     @Override
-    @Transactional("tm2")
+    //@Transactional("tm2")
     public User createUser(User user){
 
         return userRep.save(user);

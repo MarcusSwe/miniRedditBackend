@@ -1,6 +1,5 @@
 package com.example.miniredditbackend.post;
 
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -29,7 +28,6 @@ import javax.sql.DataSource;
 )
 public class postDatabase {
 
-    @Primary
     @Bean(name = "postdb")
     @ConfigurationProperties(prefix = "postdatabase.datasource")
     public DataSource postdb(){
@@ -37,7 +35,7 @@ public class postDatabase {
     }
 
 
-    @Primary
+
     @Bean(name = "entitypost")
     public LocalContainerEntityManagerFactoryBean entitypost(EntityManagerFactoryBuilder builder,
                                                           @Qualifier ("postdb") DataSource datasource){
@@ -46,7 +44,6 @@ public class postDatabase {
 
 
     @Bean(name = "tm1")
-    @Primary
     public PlatformTransactionManager tm1(@Qualifier ("entitypost") EntityManagerFactory entitypost){
         return new JpaTransactionManager(entitypost);
     }

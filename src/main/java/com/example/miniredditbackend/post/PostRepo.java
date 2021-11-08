@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 @Repository
-public interface PostRepo extends JpaRepository<User, Integer> {
+public interface PostRepo extends JpaRepository<Posts, Integer> {
 }

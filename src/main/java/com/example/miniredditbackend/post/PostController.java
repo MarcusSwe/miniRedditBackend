@@ -1,4 +1,4 @@
-package com.example.miniredditbackend.token;
+package com.example.miniredditbackend.post;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class TokenController {
+public class PostController {
 
-    private TokenService tokenSer;
+    private PostService postSer;
 
     @Autowired
-    public TokenController(TokenService tokenSer){
-        this.tokenSer = tokenSer;
+    public PostController(PostService postSer){
+         this.postSer = postSer;
     }
 
-    @PostMapping("/token")
-    public void createToken(@RequestBody TokenModel newToken, HttpServletResponse response){
-        tokenSer.createToken(new Token(newToken.getName(), newToken.getToken()));
+    @PostMapping("/post")
+    public void createPost(@RequestBody PostModel newPost, HttpServletResponse response){
+        postSer.createPost(new Posts(newPost.getTitle(), newPost.getAuthor(), newPost.getDate(), newPost.getMessage()));
     }
+
 
 }

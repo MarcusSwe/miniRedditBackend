@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Getter
@@ -11,8 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Posts")
 public class Posts {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,25 +35,19 @@ public class Posts {
     @Column(name = "downvote")
     private int downvote;
 
-    /* -- one to many .. one table one colummn - tablename is id from post plus voters
-    @Column(name = "votenames")
-    private String votenames;*/
+    @OneToMany(mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<VoteNames> voters;
 
-    /* -- one to many .. one table thw columms - tablename is id plus comments
-    @Column(name = "votenames")
-    private String votenames;*/
+    @OneToMany(mappedBy = "posts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Comments> comments;
 
     public Posts(){
     }
 
-    public Posts(String title, String author, String date, String message, int upvote, int downvote){
+    public Posts(String title, String author, String date, String message){
         this.title = title;
         this.author = author;
         this.date = date;
         this.message = message;
-        this.upvote = upvote;
-        this.downvote = downvote;
     }
-
-
 }
