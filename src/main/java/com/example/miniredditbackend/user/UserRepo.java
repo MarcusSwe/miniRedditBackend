@@ -17,5 +17,6 @@ import java.util.List;
 public interface UserRepo extends JpaRepository<User, Integer> {
 
     ArrayList<User> findByName(String name);
+    ArrayList<User> findByNameAndPassword(String name, String password);
 
 }
