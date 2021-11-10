@@ -28,11 +28,13 @@ public class PostService implements PostSer{
 
 
 
-       Posts y = postRep.findById(Integer.valueOf(31)).get();
-          System.out.println(y);
+       postRep.deleteById(31);
+       //7410   System.out.println(y);
 
-    Comments c = new Comments("test","sdafgsdfgsdg","saf",y);
-          commentRep.save(c);
+//postRep.save(y);
+
+   // Comments c = new Comments("test","sdafgsdfgdfdfgsdg","sdfgaf",y);
+     //     commentRep.save(c);
 
 
         return postRep.save(posts);
