@@ -20,9 +20,6 @@ public class TokenController {
         this.tokenSer = tokenSer;
     }
 
-    @PostMapping("/token")
-    public void createToken(@RequestBody TokenModel newToken, HttpServletResponse response){
-        tokenSer.createToken(new Token(newToken.getName(), newToken.getToken()));
-    }
+
 
 }

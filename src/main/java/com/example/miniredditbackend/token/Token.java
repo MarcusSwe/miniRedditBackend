@@ -16,16 +16,13 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "user")
-    private String name;
     @Column(name = "token")
     private String token;
 
     public Token(){
     }
 
-    public Token(String user, String token){
-        this.name = user;
+    public Token(String token){
         this.token = token;
     }
 

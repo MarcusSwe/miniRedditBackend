@@ -46,11 +46,15 @@ public class UserService implements UserSer{
         if(y.size() >0){
             System.out.println("correct password");
             String token = UUID.randomUUID().toString();
-            tokenSer.createToken(new Token(user.getName(), token));
+            tokenSer.createToken(new Token(token));
             return token;
 
         } else System.out.println("wrong password");return null;
 
+    }
+
+    public void logoff(Token token){
+        tokenSer.removeToken(token);
     }
 
 }

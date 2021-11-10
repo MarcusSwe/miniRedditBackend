@@ -1,6 +1,7 @@
 package com.example.miniredditbackend.user;
 
 
+import com.example.miniredditbackend.token.Token;
 import com.example.miniredditbackend.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     private UserService userSer;
-    private TokenService tokenSer;
 
     @Autowired
-    public UserController(UserService userSer, TokenService tokenSer){
+    public UserController(UserService userSer){
         this.userSer = userSer;
-        this. tokenSer = tokenSer;
     }
 
     @PostMapping("/newuser")
@@ -41,8 +40,6 @@ public class UserController {
         }
     }
 
-
-
     @PostMapping("/login")
     public String login(@RequestBody User loginUser, HttpServletResponse response){
 
@@ -55,5 +52,12 @@ public class UserController {
 
         return token;
     }
+
+    @PostMapping("/logout")
+    public void logoff(@RequestBody Token token){
+        userSer.logoff(token);
+    }
+
+
 
 }

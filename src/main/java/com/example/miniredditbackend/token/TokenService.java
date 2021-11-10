@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 public class TokenService implements TokenSer {
 
@@ -22,5 +24,14 @@ public class TokenService implements TokenSer {
     public Token createToken(Token token){
 
         return tokenRep.save(token);
+    }
+
+    @Override
+    public void removeToken(Token token){
+        ArrayList<Token> x = tokenRep.findByToken(token.getToken());
+        if(x.size() >0){
+           int y =  x.get(0).getId();
+           tokenRep.deleteById(y);
+        }
     }
 }

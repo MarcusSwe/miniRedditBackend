@@ -8,6 +8,11 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.util.ArrayList;
+
 @Repository
 public interface TokenRepo extends JpaRepository<Token, Integer> {
+
+    ArrayList<Token> findByToken(String token);
+
 }
