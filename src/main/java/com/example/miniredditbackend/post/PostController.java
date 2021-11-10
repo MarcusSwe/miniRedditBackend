@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,6 +21,12 @@ public class PostController {
     public PostController(PostService postSer){
          this.postSer = postSer;
     }
+
+    @GetMapping("/all")
+    public ArrayList<Posts> getPosts(HttpServletResponse response){
+        return postSer.getAllPosts();
+    }
+
 
     @PostMapping("/newpost")
     public void createPost(@RequestBody PostModel newPost, @RequestHeader("token") String token,  HttpServletResponse response){

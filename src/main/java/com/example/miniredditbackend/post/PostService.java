@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +28,6 @@ public class PostService implements PostSer{
     @Override
     public Posts createPost(Posts posts){
 
-
-
        postRep.deleteById(31);
        //7410   System.out.println(y);
 
@@ -39,5 +39,23 @@ public class PostService implements PostSer{
 
         return postRep.save(posts);
     }
+
+    public ArrayList<Posts> getAllPosts(){
+
+        ArrayList<Posts> y = postRep.findAll();
+        ArrayList<Posts> x = new ArrayList<>();
+
+
+        for(int i =0; i < y.size(); i++){
+            x.add(new Posts(y.get(i).getTitle(), y.get(i).
+                    getAuthor(), y.get(i).getDate(), y.get(i).getMessage()));
+            x.get(i).setId(y.get(i).getId());
+            x.get(i).setUpvote(y.get(i).getUpvote());
+            x.get(i).setDownvote(y.get(i).getDownvote());
+        }
+
+        return x;
+    }
+
 
 }
