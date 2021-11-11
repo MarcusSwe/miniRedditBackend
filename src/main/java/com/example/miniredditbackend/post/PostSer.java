@@ -7,6 +7,6 @@ import java.util.List;
 public interface PostSer {
 
     Posts createPost(Posts posts);
-    ArrayList<Posts> getAllPosts();
+    List<PostDTO> getAllPosts();
 
 }

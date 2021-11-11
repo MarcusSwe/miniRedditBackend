@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -18,6 +19,7 @@ public class PostService implements PostSer{
 
     private PostRepo postRep;
     private CommentRepo commentRep;
+    private int test = 1;
 
     @Autowired
     public PostService(PostRepo postRep, CommentRepo te){
@@ -40,21 +42,13 @@ public class PostService implements PostSer{
         return postRep.save(posts);
     }
 
-    public ArrayList<Posts> getAllPosts(){
+    public List<PostDTO> getAllPosts(){
+        List<Posts> y = postRep.findAll();
 
-        ArrayList<Posts> y = postRep.findAll();
-        ArrayList<Posts> x = new ArrayList<>();
+        List<PostDTO> results = y.stream().map(x -> new PostDTO(x.getTitle(), x.getAuthor(), x.getDate(), x.getMessage(),
+                x.getId(), x.getUpvote(), x.getDownvote(), "/"+test++)).collect(Collectors.toList());
 
-
-        for(int i =0; i < y.size(); i++){
-            x.add(new Posts(y.get(i).getTitle(), y.get(i).
-                    getAuthor(), y.get(i).getDate(), y.get(i).getMessage()));
-            x.get(i).setId(y.get(i).getId());
-            x.get(i).setUpvote(y.get(i).getUpvote());
-            x.get(i).setDownvote(y.get(i).getDownvote());
-        }
-
-        return x;
+        return results;
     }
 
 

@@ -23,7 +23,7 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public ArrayList<Posts> getPosts(HttpServletResponse response){
+    public List<PostDTO> getPosts(HttpServletResponse response){
         return postSer.getAllPosts();
     }
 

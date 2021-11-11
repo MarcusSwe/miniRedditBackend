@@ -10,10 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface PostRepo extends JpaRepository<Posts, Integer> {
 
-ArrayList<Posts> findAll();
+List<Posts> findAll();
 
 }
