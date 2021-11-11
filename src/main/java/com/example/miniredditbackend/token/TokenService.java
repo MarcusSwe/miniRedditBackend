@@ -34,4 +34,15 @@ public class TokenService implements TokenSer {
            tokenRep.deleteById(y);
         }
     }
-}
+
+    @Override
+    public boolean check(String token) {
+        ArrayList<Token> x = tokenRep.findByToken(token);
+        if (x.size() > 0) {
+         return true;
+        }
+        return false;
+    }
+
+
+    }

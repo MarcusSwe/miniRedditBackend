@@ -8,5 +8,6 @@ public interface PostSer {
 
     Posts createPost(Posts posts);
     List<PostDTO> getAllPosts();
-
+    void voteUp(String token, int id);
+    void voteDown(String token, int id);
 }

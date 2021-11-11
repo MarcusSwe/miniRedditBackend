@@ -1,5 +1,6 @@
 package com.example.miniredditbackend.post;
 
+import com.example.miniredditbackend.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -19,11 +20,13 @@ public class PostService implements PostSer{
 
     private PostRepo postRep;
     private CommentRepo commentRep;
+    private TokenService tokenSer;
 
     @Autowired
-    public PostService(PostRepo postRep, CommentRepo te){
+    public PostService(PostRepo postRep, CommentRepo te, TokenService tokenSer){
         this.postRep = postRep;
         this.commentRep = te;
+        this.tokenSer = tokenSer;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class PostService implements PostSer{
         return postRep.save(posts);
     }
 
+    @Override
     public List<PostDTO> getAllPosts(){
         List<Posts> y = postRep.findAll();
 
@@ -49,11 +53,44 @@ public class PostService implements PostSer{
     }
 
     public PostDTO getPost(int x){
-        Posts z = postRep.findById(Integer.valueOf(x)).get();
-
-        return new PostDTO(z.getTitle(), z.getAuthor(), z.getDate(), z.getMessage(), z.getId(), z.getUpvote(), z.getDownvote(),
-                "/post" +z.getId());
-
+        try {
+        Posts z = postRep.findById(x).get();
+            return new PostDTO(z.getTitle(), z.getAuthor(), z.getDate(), z.getMessage(), z.getId(), z.getUpvote(), z.getDownvote(),
+                    "/post" +z.getId());
+        } catch(Exception e) {
+            return null;
+        }
     }
+
+    @Override
+    public void voteUp(String token, int id){
+
+        if(tokenSer.check(token)){
+
+            int y = postRep.findById(id).get().getUpvote();
+            y++;
+            Posts x = postRep.findById(id).get();
+            x.setUpvote(y);
+            postRep.save(x);
+
+        }
+    }
+
+    @Override
+    public void voteDown(String token, int id){
+
+        if(tokenSer.check(token)){
+
+            int y = postRep.findById(id).get().getDownvote();
+            y++;
+            Posts x = postRep.findById(id).get();
+            x.setDownvote(y);
+            postRep.save(x);
+
+        }
+    }
+
+
+
 
 }

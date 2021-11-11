@@ -23,7 +23,7 @@ public class PostController {
     }
 
     @GetMapping("/all")
-    public List<PostDTO> getPosts(HttpServletResponse response){
+    public List<PostDTO> getPosts(){
         return postSer.getAllPosts();
     }
 
@@ -38,14 +38,19 @@ public class PostController {
     }
 
     @PutMapping("/voteup")
-    public void voteUp(@RequestBody VoteModelUp newVote, @RequestHeader("token") String token, HttpServletResponse response){
-
+    public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
+        //System.out.println(token, id);
+        postSer.voteUp(token, id);
     }
 
     @PutMapping("/votedown")
-    public void voteDown(@RequestBody VoteModelDown newVote, @RequestHeader("token") String token, HttpServletResponse response){
-
+    public void voteDown(@RequestHeader("token") String token,@RequestHeader("id") int id, HttpServletResponse response){
+        postSer.voteDown(token, id);
     }
 
+    @PostMapping("/newcomment")
+    public void newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token, HttpServletResponse response){
+        
+    }
 
 }

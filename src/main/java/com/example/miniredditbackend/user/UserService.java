@@ -38,7 +38,7 @@ public class UserService implements UserSer{
         }
     }
 
-
+    @Override
     public String loginUser(User user){
 
         ArrayList<User> y = userRep.findByNameAndPassword(user.getName(), user.getPassword());
@@ -53,6 +53,7 @@ public class UserService implements UserSer{
 
     }
 
+    @Override
     public void logoff(Token token){
         tokenSer.removeToken(token);
     }
