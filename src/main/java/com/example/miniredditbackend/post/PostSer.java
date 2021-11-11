@@ -6,9 +6,13 @@ import java.util.List;
 
 public interface PostSer {
 
-    Posts createPost(Posts posts);
+    Posts createPost(Posts posts, String token);
     List<PostDTO> getAllPosts();
     void voteUp(String token, int id);
     void voteDown(String token, int id);
     void createComment(String commentAuthor, String comment, String date, int id, String token);
+    void deletePost(String token, int id, String name);
+    void editPost(String token, int id, String name, String comment, String title);
+    void deleteComment(String token, int id, String name);
+    void editComment(String token, int id, String name, String comment);
 }

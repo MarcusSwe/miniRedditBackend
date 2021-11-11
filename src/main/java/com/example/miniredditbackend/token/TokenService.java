@@ -44,5 +44,11 @@ public class TokenService implements TokenSer {
         return false;
     }
 
-
+    @Override
+    public String checkNameWithToken(String token){
+        ArrayList<Token> x = tokenRep.findByToken(token);
+        String y = x.get(0).getName();
+        return y;
     }
+
+}

@@ -30,18 +30,16 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public Posts createPost(Posts posts){
+    public Posts createPost(Posts posts, String token){
 
-       postRep.deleteById(31);
-       //7410   System.out.println(y);
+        if(tokenSer.check(token)){
+            String x = tokenSer.checkNameWithToken(token);
 
-//postRep.save(y);
-
-   // Comments c = new Comments("test","sdafgsdfgdfdfgsdg","sdfgaf",y);
-     //     commentRep.save(c);
-
-
-        return postRep.save(posts);
+            if(x.equals(posts.getAuthor())){
+                return postRep.save(posts);
+            }
+        }
+          return null;
     }
 
     @Override
@@ -104,5 +102,31 @@ public class PostService implements PostSer{
 
     }
 
+    @Override
+    public void deletePost(String token, int id, String name){
+        if(tokenSer.check(token)){
+
+            Posts p = postRep.findById(id).get();
+            if(p.getAuthor().equals(name)){
+                postRep.deleteById(id);
+            }
+
+        }
+    }
+
+    @Override
+    public void editPost(String token, int id, String name, String comment, String title){
+
+    }
+
+    @Override
+    public void deleteComment(String token, int id, String name){
+
+    }
+
+    @Override
+    public void editComment(String token, int id, String name, String comment){
+
+    }
 
 }

@@ -19,11 +19,15 @@ public class Token {
     @Column(name = "token")
     private String token;
 
+    @Column(name = "name")
+    private String name;
+
     public Token(){
     }
 
-    public Token(String token){
+    public Token(String token, String name){
         this.token = token;
+        this.name = name;
     }
 
 

@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 public class TokenModel {
     private String token;
+    private String name;
 }

@@ -31,7 +31,7 @@ public class PostController {
 
     @PostMapping("/newpost")
     public void createPost(@RequestBody PostModel newPost, @RequestHeader("token") String token,  HttpServletResponse response){
-        postSer.createPost(new Posts(newPost.getTitle(), newPost.getAuthor(), newPost.getDate(), newPost.getMessage()));
+        postSer.createPost(new Posts(newPost.getTitle(), newPost.getAuthor(), newPost.getDate(), newPost.getMessage()), token);
     }
 
     @PutMapping("/voteup")
@@ -41,7 +41,7 @@ public class PostController {
     }
 
     @PutMapping("/votedown")
-    public void voteDown(@RequestHeader("token") String token,@RequestHeader("id") int id, HttpServletResponse response){
+    public void voteDown(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
         postSer.voteDown(token, id);
     }
 
@@ -50,5 +50,12 @@ public class PostController {
                            @RequestHeader("id") int id, HttpServletResponse response){
         postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token);
     }
+
+    @DeleteMapping("/postdelete")
+    public void deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id, @RequestHeader("name") String name,
+                              HttpServletResponse response){
+        postSer.deletePost(token, id, name);
+    }
+
 
 }
