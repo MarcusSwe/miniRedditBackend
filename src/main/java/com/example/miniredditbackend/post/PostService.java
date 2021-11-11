@@ -19,7 +19,6 @@ public class PostService implements PostSer{
 
     private PostRepo postRep;
     private CommentRepo commentRep;
-    private int test = 1;
 
     @Autowired
     public PostService(PostRepo postRep, CommentRepo te){
@@ -45,11 +44,16 @@ public class PostService implements PostSer{
     public List<PostDTO> getAllPosts(){
         List<Posts> y = postRep.findAll();
 
-        List<PostDTO> results = y.stream().map(x -> new PostDTO(x.getTitle(), x.getAuthor(), x.getDate(), x.getMessage(),
-                x.getId(), x.getUpvote(), x.getDownvote(), "/"+test++)).collect(Collectors.toList());
-
-        return results;
+        return y.stream().map(x -> new PostDTO(x.getTitle(), x.getAuthor(), x.getDate(), x.getMessage(),
+                x.getId(), x.getUpvote(), x.getDownvote(), "/post/"+x.getId())).collect(Collectors.toList());
     }
 
+    public PostDTO getPost(int x){
+        Posts z = postRep.findById(Integer.valueOf(x)).get();
+
+        return new PostDTO(z.getTitle(), z.getAuthor(), z.getDate(), z.getMessage(), z.getId(), z.getUpvote(), z.getDownvote(),
+                "/post" +z.getId());
+
+    }
 
 }

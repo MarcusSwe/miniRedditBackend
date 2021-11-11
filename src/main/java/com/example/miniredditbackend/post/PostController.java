@@ -27,6 +27,10 @@ public class PostController {
         return postSer.getAllPosts();
     }
 
+    @GetMapping("/{id}")
+    public PostDTO getPost(@PathVariable("id") int id){
+        return postSer.getPost(id);
+    }
 
     @PostMapping("/newpost")
     public void createPost(@RequestBody PostModel newPost, @RequestHeader("token") String token,  HttpServletResponse response){
