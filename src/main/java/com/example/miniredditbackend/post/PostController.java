@@ -1,13 +1,10 @@
 package com.example.miniredditbackend.post;
 
-
-import com.example.miniredditbackend.token.TokenModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
 
 @RestController
@@ -49,8 +46,9 @@ public class PostController {
     }
 
     @PostMapping("/newcomment")
-    public void newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token, HttpServletResponse response){
-        
+    public void newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token,
+                           @RequestHeader("id") int id, HttpServletResponse response){
+        postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token);
     }
 
 }

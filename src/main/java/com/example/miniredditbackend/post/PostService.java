@@ -90,7 +90,19 @@ public class PostService implements PostSer{
         }
     }
 
+    @Override
+    public void createComment(String commentAuthor, String comment, String date, int id, String token){
 
+        if(tokenSer.check(token)){
+
+            Posts p = postRep.findById(id).get();
+            Comments c = new Comments(commentAuthor, comment, date, p);
+
+            commentRep.save(c);
+
+        }
+
+    }
 
 
 }

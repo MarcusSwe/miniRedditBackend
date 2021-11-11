@@ -10,4 +10,5 @@ public interface PostSer {
     List<PostDTO> getAllPosts();
     void voteUp(String token, int id);
     void voteDown(String token, int id);
+    void createComment(String commentAuthor, String comment, String date, int id, String token);
 }
