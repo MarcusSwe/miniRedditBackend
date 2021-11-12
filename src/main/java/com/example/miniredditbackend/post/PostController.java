@@ -63,7 +63,15 @@ public class PostController {
         postSer.deleteComment(token, id);
     }
 
-    /*@PutMapping("/updatepost")
-    public void updatePost*/
+    @PutMapping("/updatepost")
+    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
+
+    }
+
+    @PutMapping("/updatecomment")
+    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+                           @RequestBody String comment,HttpServletResponse response){
+        postSer.editComment(token, id, comment);
+    }
 
 }

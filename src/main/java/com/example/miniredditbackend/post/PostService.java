@@ -111,15 +111,10 @@ public class PostService implements PostSer{
 
     @Override
     public void deleteComment(String token, int id){
-
          if(tokenSer.check(token)){
-
             Comments o = commentRep.findById(id).get();
-
             String x = tokenSer.checkNameWithToken(token);
-
             if(x.equals(o.getCommentAuthor())){
-
                 commentRep.deleteById(id);
             }
         }
@@ -134,7 +129,17 @@ public class PostService implements PostSer{
 
     @Override
     public void editComment(String token, int id, String comment){
+        if(tokenSer.check(token)){
 
+            System.out.println(comment);
+
+            Comments o = commentRep.findById(id).get();
+            String x = tokenSer.checkNameWithToken(token);
+            if(x.equals(o.getCommentAuthor())){
+                o.setComment(comment);
+                commentRep.save(o);
+            }
+        }
     }
 
 }
