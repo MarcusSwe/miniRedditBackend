@@ -21,12 +21,14 @@ public class PostService implements PostSer{
     private PostRepo postRep;
     private CommentRepo commentRep;
     private TokenService tokenSer;
+    private VoteNamesRepo votesRep;
 
     @Autowired
-    public PostService(PostRepo postRep, CommentRepo te, TokenService tokenSer){
+    public PostService(PostRepo postRep, CommentRepo te, TokenService tokenSer, VoteNamesRepo votesRep){
         this.postRep = postRep;
         this.commentRep = te;
         this.tokenSer = tokenSer;
+        this.votesRep = votesRep;
     }
 
     @Override
@@ -67,6 +69,11 @@ public class PostService implements PostSer{
             y++;
             Posts x = postRep.findById(id).get();
             x.setUpvote(y);
+
+
+            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
+            votesRep.save(addvoter);
+
             postRep.save(x);
 
         }
@@ -81,6 +88,11 @@ public class PostService implements PostSer{
             y++;
             Posts x = postRep.findById(id).get();
             x.setDownvote(y);
+
+            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
+            votesRep.save(addvoter);
+
+
             postRep.save(x);
 
         }
