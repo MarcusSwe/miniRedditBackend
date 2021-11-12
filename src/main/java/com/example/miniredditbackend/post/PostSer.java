@@ -16,4 +16,5 @@ public interface PostSer {
     void deleteComment(String token, int id);
     void editComment(String token, int idcomment, String comment);
     PostDTO getPost(int x);
+    List<commentDTO> getComments(int x);
 }

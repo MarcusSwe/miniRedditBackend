@@ -76,4 +76,9 @@ public class PostController {
         postSer.editComment(token, idcomment, editcomment);
     }
 
+    @GetMapping("/getcomments")
+    public List<commentDTO> getCommentsByPost(@RequestHeader("idpost") int idpost, HttpServletResponse response){
+        return postSer.getComments(idpost);
+    }
+
 }

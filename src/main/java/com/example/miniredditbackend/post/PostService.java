@@ -2,16 +2,8 @@ package com.example.miniredditbackend.post;
 
 import com.example.miniredditbackend.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -47,6 +39,12 @@ public class PostService implements PostSer{
         List<Posts> y = postRep.findAll();
         return y.stream().map(x -> new PostDTO(x.getTitle(), x.getAuthor(), x.getDate(), x.getMessage(),
                 x.getId(), x.getUpvote(), x.getDownvote(), "/post/"+x.getId())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<commentDTO> getComments(int i){
+        List<Comments> y = commentRep.findAllByPosts(postRep.findById(i).get());
+        return y.stream().map(x -> new commentDTO(x.getCommentAuthor(), x.getComment(), x.getDate(), x.getId())).collect(Collectors.toList());
     }
 
     @Override
@@ -104,38 +102,40 @@ public class PostService implements PostSer{
     @Override
     public void voteDown(String token, int id){
 
-        if(tokenSer.check(token)){
-            Posts x = postRep.findById(id).get();
-            int y = postRep.findById(id).get().getDownvote();
-            int z = postRep.findById(id).get().getUpvote();
+        if(tokenSer.check(token)) {
 
-            try{
-                votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x).getId();
-                VoteNames v = votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x);
-                String w = v.getWhatvote();
+            if (postRep.findById(id).isPresent()) {
+                Posts x = postRep.findById(id).get();
+                int y = postRep.findById(id).get().getDownvote();
+                int z = postRep.findById(id).get().getUpvote();
 
-               if(w.equals("down")){
-                   votesRep.deleteById(v.getId());
-                   y--;
-                   x.setDownvote(y);
-                   postRep.save(x);
-               }else{
-                   z--;
-                   y++;
-                   v.setWhatvote("down");
-                   x.setUpvote(z);
-                   x.setDownvote(y);
-                   postRep.save(x);
-                   votesRep.save(v);
-               }
-            }catch(Exception e) {
-                System.out.println("finns ej");
-                y++;
-                x.setDownvote(y);
-                VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token), "down" , x);
-                votesRep.save(addvoter);
-                postRep.save(x);
+                try {
+                    votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x).getId();
+                    VoteNames v = votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x);
+                    String w = v.getWhatvote();
 
+                    if (w.equals("down")) {
+                        votesRep.deleteById(v.getId());
+                        y--;
+                        x.setDownvote(y);
+                        postRep.save(x);
+                    } else {
+                        z--;
+                        y++;
+                        v.setWhatvote("down");
+                        x.setUpvote(z);
+                        x.setDownvote(y);
+                        postRep.save(x);
+                        votesRep.save(v);
+                    }
+                } catch (Exception e) {
+                    System.out.println("finns ej");
+                    y++;
+                    x.setDownvote(y);
+                    VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token), "down", x);
+                    votesRep.save(addvoter);
+                    postRep.save(x);
+                }
             }
         }
     }
