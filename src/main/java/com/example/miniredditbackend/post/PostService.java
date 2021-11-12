@@ -124,15 +124,20 @@ public class PostService implements PostSer{
 
     @Override
     public void editPost(String token, int id, String comment, String title){
-
+        if(tokenSer.check(token)){
+            Posts o = postRep.findById(id).get();
+            String x = tokenSer.checkNameWithToken(token);
+            if(x.equals(o.getAuthor())){
+                o.setMessage(comment);
+                o.setTitle(title);
+                postRep.save(o);
+            }
+        }
     }
 
     @Override
     public void editComment(String token, int id, String comment){
         if(tokenSer.check(token)){
-
-            System.out.println(comment);
-
             Comments o = commentRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(o.getCommentAuthor())){

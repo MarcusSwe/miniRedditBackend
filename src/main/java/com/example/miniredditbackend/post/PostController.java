@@ -70,8 +70,8 @@ public class PostController {
 
     @PutMapping("/updatecomment")
     public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
-                           @RequestBody String comment,HttpServletResponse response){
-        postSer.editComment(token, id, comment);
+                           @RequestBody EditPostModel editpostmodel,HttpServletResponse response){
+        postSer.editPost(token, id, editpostmodel.getMessage(), editpostmodel.getTitle());
     }
 
 }
