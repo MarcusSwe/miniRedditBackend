@@ -64,14 +64,16 @@ public class PostController {
     }
 
     @PutMapping("/updatepost")
-    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
-
+    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+            @RequestBody EditPostModel editpost
+            , HttpServletResponse response){
+        postSer.editPost(token, id, editpost.getMessage(), editpost.getTitle());
     }
 
     @PutMapping("/updatecomment")
-    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
-                           @RequestBody EditPostModel editpostmodel,HttpServletResponse response){
-        postSer.editPost(token, id, editpostmodel.getMessage(), editpostmodel.getTitle());
+    public void updateComment(@RequestHeader("token") String token, @RequestHeader("idcomment") int idcomment,
+                           @RequestBody String editcomment,HttpServletResponse response){
+        postSer.editComment(token, idcomment, editcomment);
     }
 
 }

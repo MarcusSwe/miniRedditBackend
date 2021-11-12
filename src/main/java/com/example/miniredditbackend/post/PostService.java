@@ -65,17 +65,22 @@ public class PostService implements PostSer{
 
         if(tokenSer.check(token)){
 
+           /* Posts x = postRep.findById(id).get();
+            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
+
+            VoteNames v = votesRep.findById(id).get();
+
+
+            if(){
+
+            }
+
             int y = postRep.findById(id).get().getUpvote();
             y++;
-            Posts x = postRep.findById(id).get();
             x.setUpvote(y);
-
-
-            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
             votesRep.save(addvoter);
-
             postRep.save(x);
-
+*/
         }
     }
 
@@ -84,15 +89,14 @@ public class PostService implements PostSer{
 
         if(tokenSer.check(token)){
 
+
+
             int y = postRep.findById(id).get().getDownvote();
             y++;
             Posts x = postRep.findById(id).get();
             x.setDownvote(y);
-
             VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
             votesRep.save(addvoter);
-
-
             postRep.save(x);
 
         }
@@ -148,9 +152,9 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public void editComment(String token, int id, String comment){
+    public void editComment(String token, int idcomment, String comment){
         if(tokenSer.check(token)){
-            Comments o = commentRep.findById(id).get();
+            Comments o = commentRep.findById(idcomment).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(o.getCommentAuthor())){
                 o.setComment(comment);
