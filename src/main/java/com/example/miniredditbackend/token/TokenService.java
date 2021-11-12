@@ -20,7 +20,6 @@ public class TokenService implements TokenSer {
     }
 
     @Override
-    //@Transactional("tm3")
     public Token createToken(Token token){
 
         return tokenRep.save(token);

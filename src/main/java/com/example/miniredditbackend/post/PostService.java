@@ -43,8 +43,10 @@ public class PostService implements PostSer{
 
     @Override
     public List<commentDTO> getComments(int i){
+        if(postRep.findById(i).isPresent()){
         List<Comments> y = commentRep.findAllByPosts(postRep.findById(i).get());
         return y.stream().map(x -> new commentDTO(x.getCommentAuthor(), x.getComment(), x.getDate(), x.getId())).collect(Collectors.toList());
+        } else return null;
     }
 
     @Override
@@ -141,64 +143,73 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public void createComment(String commentAuthor, String comment, String date, int id, String token){
-        if(tokenSer.check(token)){
+    public int createComment(String commentAuthor, String comment, String date, int id, String token){
+        if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(commentAuthor)){
                 Posts p = postRep.findById(id).get();
                 Comments c = new Comments(commentAuthor, comment, date, p);
                 commentRep.save(c);
+                return 1;
             }
-        }
+        }return 2;
     }
 
     @Override
-    public void deletePost(String token, int id){
-        if(tokenSer.check(token)){
+    public boolean deletePost(String token, int id){
+        if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             Posts p = postRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(p.getAuthor())){
                 postRep.deleteById(id);
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void deleteComment(String token, int id){
-         if(tokenSer.check(token)){
+    public boolean deleteComment(String token, int id){
+         if(tokenSer.check(token) && commentRep.findById(id).isPresent()){
             Comments o = commentRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(o.getCommentAuthor())){
                 commentRep.deleteById(id);
+                return true;
             }
         }
+         return false;
     }
 
 
 
     @Override
-    public void editPost(String token, int id, String comment, String title){
-        if(tokenSer.check(token)){
+    public boolean editPost(String token, int id, String comment, String title){
+        if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             Posts o = postRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(o.getAuthor())){
                 o.setMessage(comment);
                 o.setTitle(title);
                 postRep.save(o);
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public void editComment(String token, int idcomment, String comment){
-        if(tokenSer.check(token)){
+    public boolean editComment(String token, int idcomment, String comment){
+        if(tokenSer.check(token) && commentRep.findById(idcomment).isPresent()){
             Comments o = commentRep.findById(idcomment).get();
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(o.getCommentAuthor())){
                 o.setComment(comment);
                 commentRep.save(o);
+                return true;
             }
         }
+        return false;
     }
 
 }

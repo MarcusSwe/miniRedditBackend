@@ -10,11 +10,11 @@ public interface PostSer {
     List<PostDTO> getAllPosts();
     void voteUp(String token, int id);
     void voteDown(String token, int id);
-    void createComment(String commentAuthor, String comment, String date, int id, String token);
-    void deletePost(String token, int id);
-    void editPost(String token, int id, String comment, String title);
-    void deleteComment(String token, int id);
-    void editComment(String token, int idcomment, String comment);
+    int createComment(String commentAuthor, String comment, String date, int id, String token);
+    boolean deletePost(String token, int id);
+    boolean editPost(String token, int id, String comment, String title);
+    boolean deleteComment(String token, int id);
+    boolean editComment(String token, int idcomment, String comment);
     PostDTO getPost(int x);
     List<commentDTO> getComments(int x);
 }

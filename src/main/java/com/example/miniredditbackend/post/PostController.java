@@ -30,50 +30,76 @@ public class PostController {
     }
 
     @PostMapping("/newpost")
-    public void createPost(@RequestBody PostModel newPost, @RequestHeader("token") String token,  HttpServletResponse response){
-        postSer.createPost(new Posts(newPost.getTitle(), newPost.getAuthor(), newPost.getDate(), newPost.getMessage()), token);
+    public String createPost(@RequestBody PostModel newPost, @RequestHeader("token") String token,  HttpServletResponse response){
+        if(postSer.createPost(new Posts(newPost.getTitle(), newPost.getAuthor(), newPost.getDate(), newPost.getMessage()), token) == null){
+            response.setStatus(409);
+            return "User not logged in or something else went wrong!";
+        } else return "Post created!";
     }
 
     @PutMapping("/voteup")
-    public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
-        //System.out.println(token, id);
+    public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") int id){
         postSer.voteUp(token, id);
     }
 
     @PutMapping("/votedown")
-    public void voteDown(@RequestHeader("token") String token, @RequestHeader("id") int id, HttpServletResponse response){
+    public void voteDown(@RequestHeader("token") String token, @RequestHeader("id") int id){
         postSer.voteDown(token, id);
     }
 
     @PostMapping("/newcomment")
-    public void newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token,
+    public String newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token,
                            @RequestHeader("id") int id, HttpServletResponse response){
-        postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token);
+       if(postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token) > 1){
+            response.setStatus(409);
+            return "User not logged in or something else went wrong!";
+       }else return "Comment created!";
     }
 
     @DeleteMapping("/postdelete")
-    public void deletePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String deletePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
                               HttpServletResponse response){
-        postSer.deletePost(token, id);
+        if(postSer.deletePost(token, id)){
+            return "Post deleted!";
+        }else {
+            response.setStatus(409);
+            return "Post dont exist or something else went wrong!";
+        }
+
     }
 
     @DeleteMapping("/commentdelete")
-    public void deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id,
                            HttpServletResponse response){
-        postSer.deleteComment(token, id);
+        if(postSer.deleteComment(token, id)){
+            return "Comment deleted!";
+        }else{
+            response.setStatus(409);
+            return "Comment dont exist or something else went wrong!";
+        }
     }
 
     @PutMapping("/updatepost")
-    public void updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
             @RequestBody EditPostModel editpost
             , HttpServletResponse response){
-        postSer.editPost(token, id, editpost.getMessage(), editpost.getTitle());
+        if(postSer.editPost(token, id, editpost.getMessage(), editpost.getTitle())){
+            return "Post updated!";
+        }else{
+            response.setStatus(409);
+            return "Something went wrong or not owner to post!";
+        }
     }
 
     @PutMapping("/updatecomment")
-    public void updateComment(@RequestHeader("token") String token, @RequestHeader("idcomment") int idcomment,
+    public String updateComment(@RequestHeader("token") String token, @RequestHeader("idcomment") int idcomment,
                            @RequestBody String editcomment,HttpServletResponse response){
-        postSer.editComment(token, idcomment, editcomment);
+        if(postSer.editComment(token, idcomment, editcomment)){
+            return "Comment updated!";
+        }else{
+            response.setStatus(409);
+            return "Something went wrong or not owner to comment!";
+        }
     }
 
     @GetMapping("/getcomments")
