@@ -11,8 +11,9 @@ public interface PostSer {
     void voteUp(String token, int id);
     void voteDown(String token, int id);
     void createComment(String commentAuthor, String comment, String date, int id, String token);
-    void deletePost(String token, int id, String name);
-    void editPost(String token, int id, String name, String comment, String title);
-    void deleteComment(String token, int id, String name);
-    void editComment(String token, int id, String name, String comment);
+    void deletePost(String token, int id);
+    void editPost(String token, int id, String comment, String title);
+    void deleteComment(String token, int id);
+    void editComment(String token, int id, String comment);
+    PostDTO getPost(int x);
 }

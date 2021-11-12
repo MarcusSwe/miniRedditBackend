@@ -52,10 +52,18 @@ public class PostController {
     }
 
     @DeleteMapping("/postdelete")
-    public void deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id, @RequestHeader("name") String name,
+    public void deletePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
                               HttpServletResponse response){
-        postSer.deletePost(token, id, name);
+        postSer.deletePost(token, id);
     }
 
+    @DeleteMapping("/commentdelete")
+    public void deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id,
+                           HttpServletResponse response){
+        postSer.deleteComment(token, id);
+    }
+
+    /*@PutMapping("/updatepost")
+    public void updatePost*/
 
 }

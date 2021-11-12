@@ -31,10 +31,8 @@ public class PostService implements PostSer{
 
     @Override
     public Posts createPost(Posts posts, String token){
-
         if(tokenSer.check(token)){
             String x = tokenSer.checkNameWithToken(token);
-
             if(x.equals(posts.getAuthor())){
                 return postRep.save(posts);
             }
@@ -45,11 +43,11 @@ public class PostService implements PostSer{
     @Override
     public List<PostDTO> getAllPosts(){
         List<Posts> y = postRep.findAll();
-
         return y.stream().map(x -> new PostDTO(x.getTitle(), x.getAuthor(), x.getDate(), x.getMessage(),
                 x.getId(), x.getUpvote(), x.getDownvote(), "/post/"+x.getId())).collect(Collectors.toList());
     }
 
+    @Override
     public PostDTO getPost(int x){
         try {
         Posts z = postRep.findById(x).get();
@@ -90,42 +88,52 @@ public class PostService implements PostSer{
 
     @Override
     public void createComment(String commentAuthor, String comment, String date, int id, String token){
-
         if(tokenSer.check(token)){
-
-            Posts p = postRep.findById(id).get();
-            Comments c = new Comments(commentAuthor, comment, date, p);
-
-            commentRep.save(c);
-
+            String x = tokenSer.checkNameWithToken(token);
+            if(x.equals(commentAuthor)){
+                Posts p = postRep.findById(id).get();
+                Comments c = new Comments(commentAuthor, comment, date, p);
+                commentRep.save(c);
+            }
         }
-
     }
 
     @Override
-    public void deletePost(String token, int id, String name){
+    public void deletePost(String token, int id){
         if(tokenSer.check(token)){
-
             Posts p = postRep.findById(id).get();
-            if(p.getAuthor().equals(name)){
+            String x = tokenSer.checkNameWithToken(token);
+            if(x.equals(p.getAuthor())){
                 postRep.deleteById(id);
             }
-
         }
     }
 
     @Override
-    public void editPost(String token, int id, String name, String comment, String title){
+    public void deleteComment(String token, int id){
+
+         if(tokenSer.check(token)){
+
+            Comments o = commentRep.findById(id).get();
+
+            String x = tokenSer.checkNameWithToken(token);
+
+            if(x.equals(o.getCommentAuthor())){
+
+                commentRep.deleteById(id);
+            }
+        }
+    }
+
+
+
+    @Override
+    public void editPost(String token, int id, String comment, String title){
 
     }
 
     @Override
-    public void deleteComment(String token, int id, String name){
-
-    }
-
-    @Override
-    public void editComment(String token, int id, String name, String comment){
+    public void editComment(String token, int id, String comment){
 
     }
 
