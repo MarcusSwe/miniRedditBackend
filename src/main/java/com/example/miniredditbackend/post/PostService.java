@@ -65,22 +65,39 @@ public class PostService implements PostSer{
 
         if(tokenSer.check(token)){
 
-           /* Posts x = postRep.findById(id).get();
-            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
+            if(postRep.findById(id).isPresent()) {
+                Posts x = postRep.findById(id).get();
+                int y = postRep.findById(id).get().getUpvote();
+                int z = postRep.findById(id).get().getDownvote();
 
-            VoteNames v = votesRep.findById(id).get();
+                try{
+                    votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x).getId();
+                    VoteNames v = votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x);
+                    String w = v.getWhatvote();
 
-
-            if(){
-
+                    if(w.equals("up")){
+                     votesRep.deleteById(v.getId());
+                     y--;
+                     x.setUpvote(y);
+                     postRep.save(x);
+                    }else{
+                        z--;
+                        y++;
+                        v.setWhatvote("up");
+                        x.setDownvote(z);
+                        x.setUpvote(y);
+                        votesRep.save(v);
+                        postRep.save(x);
+                    }
+                }catch(Exception e){
+                    System.out.println("finns ej");
+                    y++;
+                    x.setUpvote(y);
+                    VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token), "up",x);
+                    votesRep.save(addvoter);
+                    postRep.save(x);
+                }
             }
-
-            int y = postRep.findById(id).get().getUpvote();
-            y++;
-            x.setUpvote(y);
-            votesRep.save(addvoter);
-            postRep.save(x);
-*/
         }
     }
 
@@ -88,17 +105,38 @@ public class PostService implements PostSer{
     public void voteDown(String token, int id){
 
         if(tokenSer.check(token)){
-
-
-
-            int y = postRep.findById(id).get().getDownvote();
-            y++;
             Posts x = postRep.findById(id).get();
-            x.setDownvote(y);
-            VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token),x);
-            votesRep.save(addvoter);
-            postRep.save(x);
+            int y = postRep.findById(id).get().getDownvote();
+            int z = postRep.findById(id).get().getUpvote();
 
+            try{
+                votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x).getId();
+                VoteNames v = votesRep.findByVotenamesAndPosts(tokenSer.checkNameWithToken(token), x);
+                String w = v.getWhatvote();
+
+               if(w.equals("down")){
+                   votesRep.deleteById(v.getId());
+                   y--;
+                   x.setDownvote(y);
+                   postRep.save(x);
+               }else{
+                   z--;
+                   y++;
+                   v.setWhatvote("down");
+                   x.setUpvote(z);
+                   x.setDownvote(y);
+                   postRep.save(x);
+                   votesRep.save(v);
+               }
+            }catch(Exception e) {
+                System.out.println("finns ej");
+                y++;
+                x.setDownvote(y);
+                VoteNames addvoter = new VoteNames(tokenSer.checkNameWithToken(token), "down" , x);
+                votesRep.save(addvoter);
+                postRep.save(x);
+
+            }
         }
     }
 

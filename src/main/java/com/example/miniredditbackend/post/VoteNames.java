@@ -13,9 +13,10 @@ public class VoteNames {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     private String votenames;
+    private String whatvote;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id")
@@ -25,8 +26,9 @@ public class VoteNames {
 
     }
 
-    public VoteNames(String voter, Posts posts){
+    public VoteNames(String voter, String whatvote, Posts posts){
         this.votenames = voter;
+        this.whatvote = whatvote;
         this.posts = posts;
     }
 

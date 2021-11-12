@@ -8,5 +8,6 @@ import lombok.Setter;
 public class VoteNamesModel {
 
     private String votenames;
+    private String whatvote;
 
 }
