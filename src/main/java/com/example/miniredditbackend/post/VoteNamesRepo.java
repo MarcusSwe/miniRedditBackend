@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository
-public interface VoteNamesRepo extends JpaRepository<VoteNames, Integer> {
+public interface VoteNamesRepo extends JpaRepository<VoteNames, Long> {
 
     VoteNames findByVotenamesAndPosts(String voter, Posts y);
 }

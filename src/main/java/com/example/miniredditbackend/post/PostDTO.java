@@ -11,12 +11,12 @@ public class PostDTO {
     private String author;
     private String date;
     private String message;
-    private int id;
+    private long id;
     private int upvote;
     private int downvote;
     private String hypermedialink;
 
-    public PostDTO(String title, String author, String date, String message, int id, int upvote, int downvote, String hypermedialink) {
+    public PostDTO(String title, String author, String date, String message, long id, int upvote, int downvote, String hypermedialink) {
         this.title = title;
         this.author = author;
         this.date = date;

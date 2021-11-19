@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentRepo extends JpaRepository<Comments, Integer>{
+public interface CommentRepo extends JpaRepository<Comments, Long>{
 
     List<Comments> findAll();
     List<Comments> findAllByPosts(Posts x);

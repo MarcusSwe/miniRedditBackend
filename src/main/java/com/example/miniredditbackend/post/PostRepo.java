@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public interface PostRepo extends JpaRepository<Posts, Integer> {
+public interface PostRepo extends JpaRepository<Posts, Long> {
 
 List<Posts> findAll();
 

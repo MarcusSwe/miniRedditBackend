@@ -25,7 +25,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public PostDTO getPost(@PathVariable("id") int id){
+    public PostDTO getPost(@PathVariable("id") long id){
         return postSer.getPost(id);
     }
 
@@ -38,20 +38,20 @@ public class PostController {
     }
 
     @PutMapping("/voteup")
-    public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") int id){
+    public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") long id){
         System.out.println(token);
         System.out.println(id);
         postSer.voteUp(token, id);
     }
 
     @PutMapping("/votedown")
-    public void voteDown(@RequestHeader("token") String token, @RequestHeader("id") int id){
+    public void voteDown(@RequestHeader("token") String token, @RequestHeader("id") long id){
         postSer.voteDown(token, id);
     }
 
     @PostMapping("/newcomment")
     public String newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token,
-                           @RequestHeader("id") int id, HttpServletResponse response){
+                           @RequestHeader("id") long id, HttpServletResponse response){
        if(postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token) > 1){
             response.setStatus(409);
             return "User not logged in or something else went wrong!";
@@ -59,7 +59,7 @@ public class PostController {
     }
 
     @DeleteMapping("/postdelete")
-    public String deletePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String deletePost(@RequestHeader("token") String token, @RequestHeader("id") long id,
                               HttpServletResponse response){
         if(postSer.deletePost(token, id)){
             return "Post deleted!";
@@ -71,7 +71,7 @@ public class PostController {
     }
 
     @DeleteMapping("/commentdelete")
-    public String deleteComment(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String deleteComment(@RequestHeader("token") String token, @RequestHeader("id") long id,
                            HttpServletResponse response){
         if(postSer.deleteComment(token, id)){
             return "Comment deleted!";
@@ -82,7 +82,7 @@ public class PostController {
     }
 
     @PutMapping("/updatepost")
-    public String updatePost(@RequestHeader("token") String token, @RequestHeader("id") int id,
+    public String updatePost(@RequestHeader("token") String token, @RequestHeader("id") long id,
             @RequestBody EditPostModel editpost
             , HttpServletResponse response){
         if(postSer.editPost(token, id, editpost.getMessage(), editpost.getTitle())){
@@ -94,7 +94,7 @@ public class PostController {
     }
 
     @PutMapping("/updatecomment")
-    public String updateComment(@RequestHeader("token") String token, @RequestHeader("idcomment") int idcomment,
+    public String updateComment(@RequestHeader("token") String token, @RequestHeader("idcomment") long idcomment,
                            @RequestBody String editcomment,HttpServletResponse response){
         if(postSer.editComment(token, idcomment, editcomment)){
             return "Comment updated!";
@@ -105,7 +105,7 @@ public class PostController {
     }
 
     @GetMapping("/getcomments")
-    public List<commentDTO> getCommentsByPost(@RequestHeader("idpost") int idpost, HttpServletResponse response){
+    public List<commentDTO> getCommentsByPost(@RequestHeader("idpost") long idpost, HttpServletResponse response){
         return postSer.getComments(idpost);
     }
 

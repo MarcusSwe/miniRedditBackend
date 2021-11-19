@@ -42,7 +42,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public List<commentDTO> getComments(int i){
+    public List<commentDTO> getComments(long i){
         if(postRep.findById(i).isPresent()){
         List<Comments> y = commentRep.findAllByPosts(postRep.findById(i).get());
         return y.stream().map(x -> new commentDTO(x.getCommentAuthor(), x.getComment(), x.getDate(), x.getId())).collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public PostDTO getPost(int x){
+    public PostDTO getPost(long x){
         try {
         Posts z = postRep.findById(x).get();
             return new PostDTO(z.getTitle(), z.getAuthor(), z.getDate(), z.getMessage(), z.getId(), z.getUpvote(), z.getDownvote(),
@@ -61,7 +61,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public void voteUp(String token, int id){
+    public void voteUp(String token, long id){
 
         if(tokenSer.check(token)){
 
@@ -102,7 +102,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public void voteDown(String token, int id){
+    public void voteDown(String token, long id){
 
         if(tokenSer.check(token)) {
 
@@ -143,7 +143,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public int createComment(String commentAuthor, String comment, String date, int id, String token){
+    public int createComment(String commentAuthor, String comment, String date, long id, String token){
         System.out.println("111111111111111");
         if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             System.out.println("2222222222222222222");
@@ -159,7 +159,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public boolean deletePost(String token, int id){
+    public boolean deletePost(String token, long id){
         if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             Posts p = postRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
@@ -172,7 +172,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public boolean deleteComment(String token, int id){
+    public boolean deleteComment(String token, long id){
          if(tokenSer.check(token) && commentRep.findById(id).isPresent()){
             Comments o = commentRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
@@ -187,7 +187,7 @@ public class PostService implements PostSer{
 
 
     @Override
-    public boolean editPost(String token, int id, String comment, String title){
+    public boolean editPost(String token, long id, String comment, String title){
         if(tokenSer.check(token) && postRep.findById(id).isPresent()){
             Posts o = postRep.findById(id).get();
             String x = tokenSer.checkNameWithToken(token);
@@ -202,7 +202,7 @@ public class PostService implements PostSer{
     }
 
     @Override
-    public boolean editComment(String token, int idcomment, String comment){
+    public boolean editComment(String token, long idcomment, String comment){
         if(tokenSer.check(token) && commentRep.findById(idcomment).isPresent()){
             Comments o = commentRep.findById(idcomment).get();
             String x = tokenSer.checkNameWithToken(token);

@@ -10,9 +10,9 @@ public class commentDTO {
     private String commentAuthor;
     private String comment;
     private String date;
-    private int id;
+    private long id;
 
-    public commentDTO(String commentAuthor, String comment, String date, int id){
+    public commentDTO(String commentAuthor, String comment, String date, long id){
         this.commentAuthor = commentAuthor;
         this.comment = comment;
         this.date = date;
