@@ -54,7 +54,7 @@ public class PostService implements PostSer{
         try {
         Posts z = postRep.findById(x).get();
             return new PostDTO(z.getTitle(), z.getAuthor(), z.getDate(), z.getMessage(), z.getId(), z.getUpvote(), z.getDownvote(),
-                    "/post" +z.getId());
+                    "/post/" +z.getId());
         } catch(Exception e) {
             return null;
         }
@@ -144,9 +144,12 @@ public class PostService implements PostSer{
 
     @Override
     public int createComment(String commentAuthor, String comment, String date, int id, String token){
+        System.out.println("111111111111111");
         if(tokenSer.check(token) && postRep.findById(id).isPresent()){
+            System.out.println("2222222222222222222");
             String x = tokenSer.checkNameWithToken(token);
             if(x.equals(commentAuthor)){
+                System.out.println("333333333333333333");
                 Posts p = postRep.findById(id).get();
                 Comments c = new Comments(commentAuthor, comment, date, p);
                 commentRep.save(c);

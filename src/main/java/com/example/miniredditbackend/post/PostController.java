@@ -39,6 +39,8 @@ public class PostController {
 
     @PutMapping("/voteup")
     public void voteUp(@RequestHeader("token") String token, @RequestHeader("id") int id){
+        System.out.println(token);
+        System.out.println(id);
         postSer.voteUp(token, id);
     }
 

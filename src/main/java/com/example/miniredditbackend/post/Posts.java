@@ -26,7 +26,7 @@ public class Posts {
     @Column(name = "date")
     private String date;
 
-    @Column(name = "message")
+    @Column(name = "message", columnDefinition = "VARCHAR(700)")
     private String message;
 
     @Column(name = "upvote")
