@@ -48,6 +48,12 @@ public class UserController {
         userSer.logoff(token);
     }
 
+    @PostMapping("/auth")
+    public String checkAuth(@RequestBody String token){
+        String x = userSer.checkAuth(token);
+        return x;
+    }
+
 
 
 }

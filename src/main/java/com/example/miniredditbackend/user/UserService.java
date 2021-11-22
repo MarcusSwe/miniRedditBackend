@@ -47,4 +47,10 @@ public class UserService implements UserSer{
         tokenSer.removeToken(token);
     }
 
+    @Override
+    public String checkAuth(String token){
+        String x = tokenSer.checkAuth(token);
+           return x;
+    }
+
 }

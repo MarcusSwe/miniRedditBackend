@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import java.util.ArrayList;
 
 @Repository
-public interface TokenRepo extends JpaRepository<Token, Integer> {
+public interface TokenRepo extends JpaRepository<Token, Long> {
 
     ArrayList<Token> findByToken(String token);
 

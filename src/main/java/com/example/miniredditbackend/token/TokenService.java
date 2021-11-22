@@ -29,7 +29,7 @@ public class TokenService implements TokenSer {
     public void removeToken(Token token){
         ArrayList<Token> x = tokenRep.findByToken(token.getToken());
         if(x.size() >0){
-           int y =  x.get(0).getId();
+           long y =  x.get(0).getId();
            tokenRep.deleteById(y);
         }
     }
@@ -41,6 +41,15 @@ public class TokenService implements TokenSer {
          return true;
         }
         return false;
+    }
+
+    @Override
+    public String checkAuth(String token) {
+        ArrayList<Token> x = tokenRep.findByToken(token);
+        if (x.size() > 0) {
+            return x.get(0).getName();
+        }
+        return "not logged in";
     }
 
     @Override

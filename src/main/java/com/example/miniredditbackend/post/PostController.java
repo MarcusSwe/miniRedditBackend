@@ -1,10 +1,13 @@
 package com.example.miniredditbackend.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.TemporalType;
 import javax.servlet.http.HttpServletResponse;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -52,6 +55,8 @@ public class PostController {
     @PostMapping("/newcomment")
     public String newComment(@RequestBody CommentModel newComment, @RequestHeader("token") String token,
                            @RequestHeader("id") long id, HttpServletResponse response){
+        System.out.println(newComment.getDate());
+
        if(postSer.createComment(newComment.getCommentAuthor(), newComment.getComment(), newComment.getDate(), id, token) > 1){
             response.setStatus(409);
             return "User not logged in or something else went wrong!";

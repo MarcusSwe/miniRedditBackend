@@ -8,4 +8,5 @@ public interface UserSer {
     int createUser(User user);
     String loginUser(User user);
     void logoff(Token token);
+    String checkAuth(String token);
 }
